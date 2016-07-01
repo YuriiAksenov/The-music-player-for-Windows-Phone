@@ -5,9 +5,126 @@
     xmlns:local="using:The_music_player_for_Windows_Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80*"/>
+            <RowDefinition Height="400*"/>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="100*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="301*"/>
+            <ColumnDefinition Width="715*"/>
+            <ColumnDefinition Width="300*"/>
+        </Grid.ColumnDefinitions>
+
+        <ListView
+            SelectionMode="None"
+            Grid.Row="3"
+            Grid.Column="0"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center" Height="110" Margin="92,11,83,10" Width="126">
+            <Image 
+            x:Name="imageBack"
+            Source="Resources/ic_fast_rewind_black_24dp.png" 
+            Stretch="Fill"
+            
+            Width="100"
+            Height="100"
+            Tapped="imageBack_Tapped"/>
+        </ListView>
+
+        <ListView
+            SelectionMode="None"
+            Grid.Row="3"
+            Grid.Column="1"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center" Height="110" Margin="304,11,285,10" Width="126">
+            <Image 
+            x:Name="imagePlay"
+            Source="Resources/ic_pause_circle_outline_black_24dp.png" 
+            Stretch="Uniform"
+            
+            Width="100"
+            Height="100"
+            Tapped="imagePlay_Tapped"
+            />
+        </ListView>
+
+        <ListView
+            SelectionMode="None"
+            Grid.Column="2"
+            Grid.Row="3" 
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center" Height="110" Margin="118,11,106,10" Width="126">
+            <Image 
+            x:Name="imageNext"
+            Source="Resources/ic_fast_forward_black_24dp.png"
+            Width="100"
+            Height="100" 
+            Tapped="imageNext_Tapped"/>
+        </ListView>
+
+        <ListBox 
+            x:Name="audioView" 
+            Grid.Row="1" 
+            Grid.ColumnSpan="3" 
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            SelectionMode="Extended"
+            Background="Transparent"
+            Foreground="White">
+
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock
+                        Text="{Binding title}"
+                        Tag="{Binding url}"
+                        Tapped="TextBlock_Tapped"
+                        />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <TextBox 
+            x:Name="textRequest" 
+            HorizontalAlignment="Center"
+            TextWrapping="Wrap"
+            Width="662"
+            Text=""
+            VerticalAlignment="Center"
+            Grid.Row="0"
+            Height="39" TextChanged="textRequest_TextChanged" Grid.Column="1" Margin="42,31,38,35"/>
+
+        <MediaElement 
+            x:Name="Player"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Left"
+            Height="100"
+            Width="100" Margin="0,3,0,2"/>
+
+        <ProgressBar 
+            x:Name="ProgressPos" 
+            Grid.Row="2" 
+            VerticalAlignment="Stretch" 
+            Minimum="0"
+            Maximum="{Binding ElementName=Player,
+            Path=NaturalDuration.TimeSpan.TotalSeconds}"
+            Value="{Binding ElementName=Player,
+            Path=Position.TotalSeconds,
+            Mode=TwoWay}" Grid.Column="1" Margin="42,0,38,0"
+            />
+
+
+
+
+        <Grid.Background>
+            <ImageBrush Stretch="UniformToFill" 
+                        ImageSource="Resources/colorful-triangles-background.jpg"/>
+        </Grid.Background>
 
     </Grid>
 </Page>
