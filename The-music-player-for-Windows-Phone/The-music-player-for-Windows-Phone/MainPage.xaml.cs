@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу http://go.microsoft.com/fwlink/?LinkId=391641
@@ -55,10 +56,7 @@ namespace The_music_player_for_Windows_Phone
 
         private void TextBlock_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            string tempUrl = (sender as TextBlock).Tag.ToString();
-            Player.Source = new Uri(GetTrueUrl(tempUrl));
-            Player.Play();
-
+            PlayTrack((sender as TextBlock).Tag.ToString());
         }
         //Так как весь адрес url песни очень стращный и большой и несет много лишнего,
         //напишем метод который будет выводить поджстроку до ? это и будет истинный utl адрес
@@ -92,18 +90,47 @@ namespace The_music_player_for_Windows_Phone
         private void imageBack_Tapped(object sender, TappedRoutedEventArgs e)
         {
             //передаем значение и одновременно делаем декремент значения в свойстве объекта
-            int n = --audioView.SelectedIndex;
+            //Вместо трех строченк ниже можно записать одну
 
-            string tempUrl = (audioView.Items[n] as VKAudio).url;
-            PlayTrack(tempUrl);
-
+            /* int n = --audioView.SelectedIndex;
+             string tempUrl = (audioView.Items[n] as VKAudio).url;
+             PlayTrack(tempUrl);*/
+            
+            PlayTrack((audioView.Items[--audioView.SelectedIndex] as VKAudio).url);
         }
         private void imageNext_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            int n = ++audioView.SelectedIndex;
+           
             //передаем значение и одновременно делаем инкремент значения в свойстве объекта
-            string tempUrl = (audioView.Items[n] as VKAudio).url;
-            PlayTrack(tempUrl);
+            
+            //Вместо трех строченк ниже можно записать одну
+
+            /* int n = ++audioView.SelectedIndex;
+             string tempUrl = (audioView.Items[n] as VKAudio).url;
+             PlayTrack(tempUrl);*/
+
+            PlayTrack((audioView.Items[++audioView.SelectedIndex] as VKAudio).url);
+        }
+
+        private void imagePlay_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            if(Player.CurrentState==MediaElementState.Playing)
+            {
+                Player.Pause();
+                Image_Loaded(@"Resources/ic_play_circle_outline_black_24dp.png");
+            }
+            else
+            {
+                Player.Play();
+                Image_Loaded(@"Resources/ic_pause_circle_outline_black_24dp.png");
+            }
+        }
+        //Метод который меняет картинку при ворспроизведении
+        void Image_Loaded(string Icon)
+        {
+            BitmapImage bitmapImage = new BitmapImage();
+            bitmapImage.UriSource = new Uri(imagePlay.BaseUri, Icon);
+            imagePlay.Source = bitmapImage;
         }
     }
 }

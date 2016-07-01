@@ -21,33 +21,50 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Image 
+        <ListView
+            Grid.Row="3"
+            Grid.Column="0"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center">
+            <Image 
             x:Name="imageBack"
             Source="Resources/ic_fast_rewind_black_24dp.png" 
             Stretch="Fill"
-            Grid.Row="3"
-            Grid.Column="0"
+            
             Width="100"
             Height="100"
             Tapped="imageBack_Tapped"/>
-        <Image 
+        </ListView>
+
+        <ListView
+            Grid.Row="3"
+            Grid.Column="1"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center">
+            <Image 
             x:Name="imagePlay"
             Source="Resources/ic_pause_circle_outline_black_24dp.png" 
             Stretch="Uniform"
-            Grid.Row="3"
-            Grid.Column="1"
+            
             Width="100"
             Height="100"
+            Tapped="imagePlay_Tapped"
             />
-        <Image 
-            x:Name="imageNext"
-            Source="Resources/ic_fast_forward_black_24dp.png"
+        </ListView>
+        
+        <ListView
             Grid.Column="2"
             Grid.Row="3" 
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center">
+            <Image 
+            x:Name="imageNext"
+            Source="Resources/ic_fast_forward_black_24dp.png"
             Width="100"
             Height="100" 
             Tapped="imageNext_Tapped"/>
-
+        </ListView>
+        
         <ListBox 
             x:Name="audioView" 
             Grid.Row="1" 
@@ -79,14 +96,14 @@
             Grid.Row="0"
             Grid.ColumnSpan="3"
             Height="39" TextChanged="textRequest_TextChanged"/>
-        
+
         <MediaElement 
             x:Name="Player"
             VerticalAlignment="Center"
             HorizontalAlignment="Left"
             Height="100"
             Width="100"/>
-        
+
         <ProgressBar 
             x:Name="ProgressPos" 
             Height="10" 
@@ -94,9 +111,15 @@
             Grid.ColumnSpan="3" 
             VerticalAlignment="Stretch"
             Width="380" 
+            Minimum="0"
+            Maximum="{Binding ElementName=Player,
+            Path=NaturalDuration.TimeSpan.TotalSeconds}"
+            Value="{Binding ElementName=Player,
+            Path=Position.TotalSeconds,
+            Mode=TwoWay}"
             />
 
-        
+
 
 
         <Grid.Background>
