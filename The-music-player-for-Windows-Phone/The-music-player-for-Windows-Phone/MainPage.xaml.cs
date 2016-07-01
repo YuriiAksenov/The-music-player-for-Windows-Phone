@@ -36,7 +36,7 @@ namespace The_music_player_for_Windows_Phone
 
         }
 
-       
+
         /// <summary>
         /// Вызывается перед отображением этой страницы во фрейме.
         /// </summary>
@@ -53,19 +53,57 @@ namespace The_music_player_for_Windows_Phone
             // данное событие обрабатывается для вас.
         }
 
-        private void Button_Tapped(object sender, TappedRoutedEventArgs e)
+        private void TextBlock_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            VKRequest.Dispatch <VKList<VKAudio>>( new VKRequestParameters(
+            string tempUrl = (sender as TextBlock).Tag.ToString();
+            Player.Source = new Uri(GetTrueUrl(tempUrl));
+            Player.Play();
+
+        }
+        //Так как весь адрес url песни очень стращный и большой и несет много лишнего,
+        //напишем метод который будет выводить поджстроку до ? это и будет истинный utl адрес
+        public string GetTrueUrl(string InputString)
+            => InputString.Substring(0, InputString.IndexOf('?')); //верси C# 6.0 новый синтаксис)
+
+        private void textRequest_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            VKRequest.Dispatch<VKList<VKAudio>>(new VKRequestParameters(
                 "audio.search",
-                "q", "OneRepublic"),
-                (result)=>
+                "q", textRequest.Text),
+                (result) =>
                 {
-                    foreach (var item in result.Data.items)
+                    try
                     {
-                        audioView.Items.Add(item.title);
+                        audioView.ItemsSource = result.Data.items;
                     }
+                    catch
+                    { }
+
                 }
                 );
+        }
+
+
+        private void PlayTrack(string tempUrl)
+        {
+            Player.Source = new Uri(GetTrueUrl(tempUrl));
+            Player.Play();
+        }
+        private void imageBack_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            //передаем значение и одновременно делаем декремент значения в свойстве объекта
+            int n = --audioView.SelectedIndex;
+
+            string tempUrl = (audioView.Items[n] as VKAudio).url;
+            PlayTrack(tempUrl);
+
+        }
+        private void imageNext_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            int n = ++audioView.SelectedIndex;
+            //передаем значение и одновременно делаем инкремент значения в свойстве объекта
+            string tempUrl = (audioView.Items[n] as VKAudio).url;
+            PlayTrack(tempUrl);
         }
     }
 }

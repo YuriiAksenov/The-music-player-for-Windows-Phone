@@ -22,13 +22,16 @@
         </Grid.ColumnDefinitions>
 
         <Image 
+            x:Name="imageBack"
             Source="Resources/ic_fast_rewind_black_24dp.png" 
             Stretch="Fill"
             Grid.Row="3"
             Grid.Column="0"
             Width="100"
-            Height="100"/>
+            Height="100"
+            Tapped="imageBack_Tapped"/>
         <Image 
+            x:Name="imagePlay"
             Source="Resources/ic_pause_circle_outline_black_24dp.png" 
             Stretch="Uniform"
             Grid.Row="3"
@@ -37,11 +40,13 @@
             Height="100"
             />
         <Image 
+            x:Name="imageNext"
             Source="Resources/ic_fast_forward_black_24dp.png"
             Grid.Column="2"
             Grid.Row="3" 
             Width="100"
-            Height="100" />
+            Height="100" 
+            Tapped="imageNext_Tapped"/>
 
         <ListBox 
             x:Name="audioView" 
@@ -51,8 +56,19 @@
             VerticalAlignment="Stretch"
             SelectionMode="Extended"
             Background="Transparent"
-            Foreground="White"/>
-        
+            Foreground="White">
+
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock
+                        Text="{Binding title}"
+                        Tag="{Binding url}"
+                        Tapped="TextBlock_Tapped"
+                        />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
         <TextBox 
             x:Name="textRequest" 
             HorizontalAlignment="Center"
@@ -62,7 +78,7 @@
             VerticalAlignment="Center"
             Grid.Row="0"
             Grid.ColumnSpan="3"
-            Height="39"/>
+            Height="39" TextChanged="textRequest_TextChanged"/>
         
         <MediaElement 
             x:Name="Player"
@@ -80,10 +96,7 @@
             Width="380" 
             />
 
-        <Button 
-    Grid.Row="1"
-    Content="testRequest"
-    Tapped="Button_Tapped"/>
+        
 
 
         <Grid.Background>
