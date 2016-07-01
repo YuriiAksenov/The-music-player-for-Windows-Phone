@@ -9,6 +9,83 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80*"/>
+            <RowDefinition Height="400*"/>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="100*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Image 
+            Source="Resources/ic_fast_rewind_black_24dp.png" 
+            Stretch="Fill"
+            Grid.Row="3"
+            Grid.Column="0"
+            Width="100"
+            Height="100"/>
+        <Image 
+            Source="Resources/ic_pause_circle_outline_black_24dp.png" 
+            Stretch="Uniform"
+            Grid.Row="3"
+            Grid.Column="1"
+            Width="100"
+            Height="100"
+            />
+        <Image 
+            Source="Resources/ic_fast_forward_black_24dp.png"
+            Grid.Column="2"
+            Grid.Row="3" 
+            Width="100"
+            Height="100" />
+
+        <ListBox 
+            x:Name="audioView" 
+            Grid.Row="1" 
+            Grid.ColumnSpan="3" 
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            SelectionMode="Extended"
+            Background="Transparent"
+            Foreground="White"/>
+        
+        <TextBox 
+            x:Name="textRequest" 
+            HorizontalAlignment="Center"
+            TextWrapping="Wrap"
+            Width="380"
+            Text=""
+            VerticalAlignment="Center"
+            Grid.Row="0"
+            Grid.ColumnSpan="3"
+            Height="39"/>
+        
+        <MediaElement 
+            x:Name="Player"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Left"
+            Height="100"
+            Width="100"/>
+        
+        <ProgressBar 
+            x:Name="ProgressPos" 
+            Height="10" 
+            Grid.Row="2" 
+            Grid.ColumnSpan="3" 
+            VerticalAlignment="Stretch"
+            Width="380" 
+            />
+
+
+
+        <Grid.Background>
+            <ImageBrush Stretch="UniformToFill" 
+                        ImageSource="Resources/colorful-triangles-background.jpg"/>
+        </Grid.Background>
 
     </Grid>
 </Page>
