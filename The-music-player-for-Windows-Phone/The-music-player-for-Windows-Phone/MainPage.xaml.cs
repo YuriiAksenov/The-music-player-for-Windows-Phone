@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using VK.WindowsPhone.SDK;
+using VK.WindowsPhone.SDK.API;
+using VK.WindowsPhone.SDK.API.Model;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -29,11 +31,12 @@ namespace The_music_player_for_Windows_Phone
             this.InitializeComponent();
             this.NavigationCacheMode = NavigationCacheMode.Required;
             VKSDK.Initialize("5528332");
-            VKSDK.WakeUpSession();
-            VKSDK.Authorize(_scope, false, false, LoginType.VKApp);
+            //VKSDK.WakeUpSession();
+            VKSDK.Authorize(_scope, false, false);
 
         }
 
+       
         /// <summary>
         /// Вызывается перед отображением этой страницы во фрейме.
         /// </summary>
@@ -48,6 +51,21 @@ namespace The_music_player_for_Windows_Phone
             // событие Windows.Phone.UI.Input.HardwareButtons.BackPressed.
             // Если вы используете NavigationHelper, предоставляемый некоторыми шаблонами,
             // данное событие обрабатывается для вас.
+        }
+
+        private void Button_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            VKRequest.Dispatch <VKList<VKAudio>>( new VKRequestParameters(
+                "audio.search",
+                "q", "OneRepublic"),
+                (result)=>
+                {
+                    foreach (var item in result.Data.items)
+                    {
+                        audioView.Items.Add(item.title);
+                    }
+                }
+                );
         }
     }
 }
