@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using VK.WindowsPhone.SDK;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -22,11 +23,15 @@ namespace The_music_player_for_Windows_Phone
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        private List<string> _scope = new List<string> { VKScope.AUDIO };
         public MainPage()
         {
             this.InitializeComponent();
-
             this.NavigationCacheMode = NavigationCacheMode.Required;
+            VKSDK.Initialize("5528332");
+            VKSDK.WakeUpSession();
+            VKSDK.Authorize(_scope, false, false, LoginType.VKApp);
+
         }
 
         /// <summary>

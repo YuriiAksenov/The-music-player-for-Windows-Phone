@@ -26,7 +26,14 @@
     <Application Id="App"
         Executable="$targetnametoken$.exe"
         EntryPoint="The_music_player_for_Windows_Phone.App">
-        <m3:VisualElements
+
+      <Extensions>
+        <Extension Category="windows.protocol">
+          <Protocol Name="vk5528332" m2:DesiredView="useLess"/>
+        </Extension>
+      </Extensions>
+
+      <m3:VisualElements
             DisplayName="The-music-player-for-Windows-Phone"
             Square150x150Logo="Assets\Logo.png"
             Square44x44Logo="Assets\SmallLogo.png"
